@@ -1,6 +1,9 @@
 
 
 
+from zmq import PLAIN_PASSWORD
+
+
 class listNode():
     '''
     A node within a linked list
@@ -66,17 +69,66 @@ class linkedList():
         '''
         Prepend a new value in the first position (head)
         '''
+        
+        # List empty
+        if self.head == None:
+            self.head = listNode(value, next_node=None)
+            self.tail = self.head
+        
+        # List not empty
+        else:
+            new_node = listNode(value, next_node=self.head)
+            self.head = new_node
     
     def insert_after(self, target, new_value):
         '''
         Insert a node after the target value. Inserts no node if 
         target not found.
         '''
+        current_node = self.head
+        
+        while current_node != None:
+            if current_node.value == target:
+                new_node = listNode(new_value, next_node=current_node.next)
+                current_node.next = new_node
+                
+                return
+            
+            else:
+                current_node = current_node.next
     
     def remove(self, target_value):
         '''
         Remove the target value
         '''
+        if self.head == None:
+            return
+        
+        if self.head.value == target_value:
+            if self.head is self.tail:
+                self.head = None
+                self.tail = None
+                return
+            
+            else:
+                removed_node = self.head
+                self.head = removed_node.next
+                removed_node.next = None
+                removed_node.value = None
+                return
+        
+        current_node = self.head
+        
+        while current_node.next != None:
+            next_node = current_node.next
+            
+            if next_node.value == target_value:
+                current_node.next = next_node.next
+                next_node.next = None
+                next_node.value = None
+                
+            else:
+                current_node = next_node
     
     def __str__(self):
         '''
@@ -99,6 +151,7 @@ if __name__ == '__main__':
     myList = linkedList()
     myList.append(1)
     myList.append(3)
+    myList.remove(1)
     
     print(myList)
     
