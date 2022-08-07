@@ -1,14 +1,14 @@
 
-from linkedlist import linkedNode, linkedList
+from linkedlist import LinkedNode, LinkedList
 
-class doubleLinkedNode(linkedNode):
+class doubleLinkedNode(LinkedNode):
     
     def __init__(self, value, previous_node, next_node):
-        linkedNode.__init__(self, value=value, next_node=next_node)
+        LinkedNode.__init__(self, value=value, next_node=next_node)
         self.previous = previous_node
         
 
-class doubleLinkedList(linkedList):
+class doubleLinkedList(LinkedList):
     '''
     Structure for double linked list
     
@@ -35,7 +35,7 @@ class doubleLinkedList(linkedList):
     print(self)
     '''
     def __init__(self):
-        linkedList.__init__(self)
+        LinkedList.__init__(self)
         
     def append(self, value):
         

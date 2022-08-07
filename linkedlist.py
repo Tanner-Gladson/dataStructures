@@ -2,7 +2,7 @@ from hashlib import new
 from tarfile import TarError
 
 
-class linkedNode():
+class LinkedNode():
     '''
     A node within a linked list
     
@@ -20,7 +20,7 @@ class linkedNode():
         self.next = None
 
 
-class linkedList():
+class LinkedList():
     '''
     A list of linked nodes.
     
@@ -50,7 +50,7 @@ class linkedList():
         self.head = None #First node
         self.tail = None #Last node
         
-    def append(self, new_node: linkedNode):
+    def append(self, new_node: LinkedNode):
         '''
         Append a new value after the tail
         '''
@@ -62,7 +62,7 @@ class linkedList():
             self.tail.next = new_node
             self.tail = new_node
     
-    def prepend(self, new_node: linkedNode):
+    def prepend(self, new_node: LinkedNode):
         '''
         Prepend a new value in the first position (head)
         '''
@@ -77,7 +77,7 @@ class linkedList():
             new_node.next = self.head
             self.head = new_node
     
-    def insert_after(self, target_node: linkedNode, new_node: linkedNode):
+    def insert_after(self, target_node: LinkedNode, new_node: LinkedNode):
         '''
         Insert a node after the target value. Inserts no node if 
         target not found.
@@ -93,7 +93,7 @@ class linkedList():
             new_node.next = target_node.next
             target_node.next = new_node
     
-    def remove_after(self, target_node: linkedNode):
+    def remove_after(self, target_node: LinkedNode):
         '''
         Remove the target value
         '''
@@ -101,7 +101,7 @@ class linkedList():
             return
         
         if target_node == None:
-            removed_node = target_node.next
+            removed_node = self.head
             self.head = self.head.next
         
         elif target_node is self.tail:
@@ -138,11 +138,11 @@ class linkedList():
 
 if __name__ == '__main__':
     
-    nodeA = linkedNode(1)
-    nodeB = linkedNode(2)
-    nodeC = linkedNode(3)
+    nodeA = LinkedNode(1)
+    nodeB = LinkedNode(2)
+    nodeC = LinkedNode(3)
     
-    myList = linkedList()
+    myList = LinkedList()
     myList.append(nodeA)
     myList.append(nodeB)
     myList.insert_after(None, nodeC)
