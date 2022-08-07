@@ -32,7 +32,7 @@ class Stack(LinkedList):
         '''
         Remove & return the top element of the stack
         '''
-        return self.remove_after(None)
+        return self.remove_after(None).value
     
     def peek(self):
         '''
@@ -61,4 +61,4 @@ if __name__ == "__main__":
     myStack.push(nodeA)
     
     print(myStack)
-    print(myStack.peek().value)
+    print(myStack.pop())
