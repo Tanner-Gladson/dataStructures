@@ -101,17 +101,23 @@ class linkedList():
             return
         
         if target_node == None:
+            removed_node = target_node.next
             self.head = self.head.next
         
         elif target_node is self.tail:
-            return
+            return None
             
         elif target_node.next is self.tail:
+            removed_node = target_node.next
             target_node.next = target_node.next.next
             self.tail = target_node.next
         
         else:
+            removed_node = target_node.next
             target_node.next = target_node.next.next
+            
+        removed_node.next = None
+        return removed_node
     
     def __str__(self):
         '''
@@ -140,7 +146,7 @@ if __name__ == '__main__':
     myList.append(nodeA)
     myList.append(nodeB)
     myList.insert_after(None, nodeC)
-    myList.remove_after(nodeB)
+    print(myList.remove_after(nodeC))
     
     
     print(myList)
