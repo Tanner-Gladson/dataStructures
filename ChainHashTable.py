@@ -43,7 +43,14 @@ class ChainedHashTable():
         Return the item corresponding to key 'item'
         '''
         
-        return self.hashArray[self.hash(item)]
+        bucketList = self.hashArray[self.hash(item)]
+        
+        if bucketList == None:
+            return
+        else:
+            # TODO: should return item itself, not the list that might contain
+            # the item. 
+            return bucketList
     
     
     def insert(self, item: int):
@@ -51,12 +58,13 @@ class ChainedHashTable():
         Insert the item into its corresponding bucket. Create list or append
         '''
         newNode = LinkedNode(item)
+        indx = self.hash(item)
         
         if self.search(item) == None:
-            indx = self.hash(item)
             self.hashArray[indx] = LinkedList()
         
-        self.search(item).append(newNode)
+        bucketList = self.hashArray[indx]
+        bucketList.append(newNode)
         
     def remove(self, item: int) -> None:
         '''
