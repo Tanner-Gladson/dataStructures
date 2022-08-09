@@ -58,6 +58,20 @@ class ChainedHashTable():
         
         self.search(item).append(newNode)
         
+    def remove(self, item: int) -> None:
+        '''
+        Remove an item from its bucket, if it exists
+        '''
+        
+        indx = self.hash(item)
+        
+        if self.hashArray == None:
+            return
+        else:
+            # Remove the node (not implemented)
+            # self.hashArray[indx].remove(item)
+            pass
+        
         
     def __str__(self):
         return str([str(x) for x in self.hashArray])
@@ -69,6 +83,7 @@ if __name__ == '__main__':
     
     my_table.insert(2)
     my_table.insert(34)
+    my_table.remove(2)
     
     print(my_table)
     
