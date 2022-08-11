@@ -71,16 +71,7 @@ class LinearProbeHashTable():
     
 
 if __name__ == '__main__':
-    myHashTable = LinearProbeHashTable(10)
     
-    myHashTable.insert(0)
-    myHashTable.insert(100)
-    myHashTable.insert(1)
-    myHashTable.insert(9)
-    myHashTable.insert(89)
-    myHashTable.remove(89)
-    myHashTable.insert(89)
-    
-    
-    print(myHashTable)
-    print(myHashTable.search(250))
+    for i in range(0, 7):
+        
+        print(((36%11) + (i * (5 - 36%5) )) %11)
