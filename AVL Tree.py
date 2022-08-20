@@ -8,7 +8,7 @@ class AVLNode():
         self.parent = None
         self.left = None
         self.right = None
-        self.height = None
+        self.height = 0
         self.balanceFactor = None
         self.value = value
         
@@ -117,38 +117,47 @@ class AVLTree():
             
             self.removeNode(successor)          
 
-    def insertNode(self, insertNode: AVLNode) -> bool:
+    def insertNode(self, newChild: AVLNode) -> bool:
         '''
         Add a node to the binary search tree.
         '''
         
         if self.root == None:
-            self.root = insertNode
+            self.root = newChild
             return True
             
         currNode = self.root
         while currNode != None:
             
-            if insertNode.value < currNode.value:
+            if newChild.value < currNode.value:
                 if currNode.left == None:
-                    currNode.left = insertNode
-                    insertNode.parent = currNode
+                    currNode.left = newChild
+                    newChild.parent = currNode
                     break
                 else:
                     currNode = currNode.left
                     
-            elif insertNode.value >= currNode.value:
+            elif newChild.value >= currNode.value:
                 if currNode.right == None:
-                    currNode.right = insertNode
-                    insertNode.parent = currNode
+                    currNode.right = newChild
+                    newChild.parent = currNode
                     break
                 else:
                     currNode = currNode.right
-                    
-        return True 
         
+        # Rotate if necessary
+        self.updateHeight(newChild)
+        parentNode = newChild.parent
+        
+        while parentNode != None:
+            self.rebalance(parentNode)
+            parentNode = parentNode.parent
+        
+        return True 
+    
+    
     def updateHeight(self, node: AVLNode):
-        ''' Get the height of a node. Precondition accurate child heights '''
+        ''' Update and get the height of a node. Precondition accurate child heights '''
         leftHeight = -1
         if node.left != None:
             leftHeight = node.left.height
@@ -158,6 +167,7 @@ class AVLTree():
             rightHeight = node.right.height
             
         node.height = max(rightHeight, leftHeight) + 1
+        return node.height
         
     def getBalance(self, node: AVLNode):
         ''' 
@@ -185,7 +195,7 @@ class AVLTree():
         if newChild != None:
             newChild.parent = parent
             
-        parent.updateHeight()
+        self.updateHeight(parent)
         return True
 
     def AVLReplaceChild(self, parent: AVLNode, currChild: str, newChild: AVLNode) -> bool:
@@ -198,8 +208,8 @@ class AVLTree():
         return True
         
     def AVLGetBalance(self, node: AVLNode):
-        node.updateBalanceFactor()
-        return node.balanceFactor
+        self.updateHeight(node)
+        return self.AVLGetBalance(node)
     
     def rightRotation(self, node: AVLNode):
         ''' Perform a right rotation at node '''
@@ -266,6 +276,6 @@ if __name__ == '__main__':
     #myTree.insertNode(nodeD)
     #myTree.insertNode(nodeE)
     
-    myTree.getHeight()
+    myTree.updateHeight(myTree.root)
     myTree.rightRotation(nodeA)
     print(myTree.AVLGetBalance(nodeA))
