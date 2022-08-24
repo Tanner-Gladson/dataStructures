@@ -75,6 +75,8 @@ class AVLTree():
         Remove a node from the tree
         '''
         # If target has no children
+        parentNode = targetNode.parent
+        
         if targetNode.left == None and targetNode.right == None:
             if targetNode is self.root:
                 self.root = None
@@ -115,7 +117,11 @@ class AVLTree():
             # Swap successor and targetNode
             targetNode.value = successor.value
             
-            self.removeNode(successor)          
+            self.removeNode(successor)     
+            
+        while parentNode != None:
+            self.rebalance(parentNode)
+            parentNode = parentNode.parent
 
     def insertNode(self, newChild: AVLNode) -> bool:
         '''
@@ -231,7 +237,7 @@ class AVLTree():
         
         if node.parent == None:
             self.root = node.right
-            node.right.parent = None
+            self.root.parent = None
         else:
             self.AVLReplaceChild(parent=node.parent, currChild=node, newChild=node.right)
             
