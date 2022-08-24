@@ -114,5 +114,83 @@ class RBTree():
         node.setChild("right", rightLeftChild)
         
     def insertNode(self, newNode: RBNode) -> None:
+        ''' Insert a node using BST rules, then balance '''
+        
+        if self.root == None:
+            self.root = newNode
+            return True
+            
+        currNode = self.root
+        while currNode != None:
+            
+            if newNode.value < currNode.value:
+                if currNode.leftChild == None:
+                    currNode.leftChild = newNode
+                    newNode.parent = currNode
+                    break
+                else:
+                    currNode = currNode.leftChild
+                    
+            elif newNode.value >= currNode.value:
+                if currNode.rightChild == None:
+                    currNode.rightChild = newNode
+                    newNode.parent = currNode
+                    break
+                else:
+                    currNode = currNode.rightChild
+        
+        newNode.color = "red"
+        
+        self.balanceTree(newNode)
+        
+    def balanceTree(self, node: RBNode) -> None:
+        ''' Rebalance a tree from node '''
+        
+        if node == self.root:
+            node.color = "black"
+            return
+            
+        parent = node.parent
+        if parent.color == "black":
+            return
+            
+        grandparent = parent.parent
+        if grandparent == None:
+            return
+        
+        if parent is grandparent.left:
+            uncle = grandparent.right
+        else:
+            uncle = grandparent.left
+        
+        # If we have an uncle node, propogate color changes
+        if uncle != None and uncle.color == "red":
+            parent.color = "black"
+            uncle.color = "black"
+            grandparent.color = "red"
+            self.balanceTree(grandparent)
+            return
+        
+        # Double rotation case
+        if parent is grandparent.left and node is parent.right:
+            self.leftRotation(parent)
+            # Reset node & parent pointers
+            node = parent
+            parent = node.parent
+        elif parent is grandparent.right and node is parent.left:
+            self.rightRotation(parent)
+            node = parent
+            parent = node.parent
+        
+        # Single rotation to balance
+        parent.color = "black"
+        grandparent.color = "red"
+        if node is parent.left:
+            self.rightRotation(parent)
+        else:
+            self.leftRotation(parent)
+        
+        
+        
         
         
